@@ -1,7 +1,9 @@
 import styles from '../styles/home.module.css';
-export const Home = () => {
+export const Home = ({ posts }) => {
     return (
         <div className={styles.postsList}>
+            {posts.map((post) =>(
+
             <div className={styles.postWrapper}>
                 <div className={styles.postHeader}>
                     <div className={styles.postAvatar}>
@@ -9,11 +11,11 @@ export const Home = () => {
                             alt="user-pic"
                         />
                    <div>
-                    <span className={styles.postAuthor}>Rahul</span>
+                                <span className={styles.postAuthor}>{post.user.name}</span>
                     <span className={styles.postTime}> a minute ago</span>
                 </div>
             </div>
-            <div className={styles.postContent}> Post Content</div>
+                        <div className={styles.postContent}>{ post.content}</div>
             <div className={styles.postActions}>
                 <div className={styles.postLike}>
                     <img src="https://img.icons8.com/?size=2x&id=16076&format=png"
@@ -44,6 +46,7 @@ export const Home = () => {
             </div>
                 </div>
             </div>
+            ))}
             </div>
                 
     );
