@@ -31,7 +31,7 @@ const customFetch = async(url, { body, ...customConfig }) => {
         }
         throw new Error(data.message);
     } catch (error) {
-        console.error(error);       
+        console.error("error ,",error);       
         return {
             message: error.message,
             success: false
@@ -39,7 +39,7 @@ const customFetch = async(url, { body, ...customConfig }) => {
     }
 };
 export const getPosts = (page=1, limit=5) => {
-    return customFetch(API_URLS.posts(page , limit), {
+    return customFetch(API_URLS, {
         method: 'GET',
     });
 }

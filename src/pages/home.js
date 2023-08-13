@@ -1,10 +1,10 @@
+import { PropTypes } from 'prop-types';
 import styles from '../styles/home.module.css';
 export const Home = ({ posts }) => {
     return (
         <div className={styles.postsList}>
             {posts.map((post) =>(
-
-            <div className={styles.postWrapper}>
+            <div className={styles.postWrapper} key={`post-${post._id}`}>
                 <div className={styles.postHeader}>
                     <div className={styles.postAvatar}>
                         <img src="https://img.freepik.com/free-icon/user_318-159711.jpg?size=626&ext=jpg"
@@ -51,3 +51,9 @@ export const Home = ({ posts }) => {
                 
     );
 };
+
+
+Home.propTypes = {
+    posts : PropTypes.array.isRequired,
+    
+}
