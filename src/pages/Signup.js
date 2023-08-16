@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from '../styles/login.module.css';
 import { toast } from 'react-toastify';
 import { useAuth } from '../hooks';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Navigate } from 'react-router-dom';
 
 const Signup = () => {
       const [name, setName] = useState('');
@@ -43,7 +43,9 @@ const Signup = () => {
 
     setSigningUp(false);
   };
-
+  if (auth.user) {
+    return <Navigate to="/"/>
+  }
   return (
     <form className={styles.loginForm} onSubmit={handleFormSubmit}>
       <span className={styles.loginSignupHeader}> Signup</span>

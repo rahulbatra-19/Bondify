@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, redirect } from 'react-router-dom';
 import { getPosts } from '../api';
 import { Home, Login, Signup, Settings } from '../pages';
 import Loader from './loader';
 import Navbar from './Navbar';
 import { useAuth } from '../hooks';
+
+function PrivateRoute({ children, ...rest }) {
+  const auth = useAuth();
+  if (auth.user) {
+    return (
+      <Settings />
+    );
+  } else {
+    return (
+      <Login />
+    )
+  }
+}
 
 const Page404 = () => {
   return <h1>404</h1>;
@@ -21,7 +34,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Signup />}></Route>
-        <Route path="/settings" element={<Settings />}></Route>
+        <Route path="/settings" element={<PrivateRoute />}></Route>
         <Route path="*" element={<Page404 />}></Route>
       </Routes>
     </div>

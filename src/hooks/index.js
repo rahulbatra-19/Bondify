@@ -69,13 +69,10 @@ export const useProvideAuth = () => {
     const response = await register(name, email, password, confirmPassword);
     console.log(response);
     if (response.success) {
-      console.log('yes');
       return {
         success: true,
       };
     } else {
-      console.log('no');
-
       return {
         success: false,
         message: response.message,

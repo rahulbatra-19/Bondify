@@ -3,6 +3,7 @@ import styles from '../styles/login.module.css';
 import { toast } from 'react-toastify';
 // import { login } from '../api';
 import { useAuth } from '../hooks';
+import { Navigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -27,6 +28,9 @@ const Login = () => {
       return toast.error(response.message);
     }
   };
+    if (auth.user) {
+      return <Navigate to="/" />;
+    }
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>
       <span className={styles.loginSignupHeader}>Log In</span>
