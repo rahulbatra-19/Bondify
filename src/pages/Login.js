@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import styles from '../styles/login.module.css';
 import { toast } from 'react-toastify';
-import { login } from '../api';
+// import { login } from '../api';
+import { useAuth } from '../hooks';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggingIn, setLoggingIn] = useState(false);
+  const auth = useAuth();
+  console.log(auth);
   // const { addToast } = useToasts();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,13 +19,13 @@ const Login = () => {
       return toast.error('Please Enter both email and password!');
     }
 
-    const response = await login(email, password);
+    const response = await auth.login(email, password);
+    setLoggingIn(false);
     if (response.success) {
       return toast.success('Successfully loged in');
     } else {
       return toast.error(response.message);
     }
-    setLoggingIn(false);
   };
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>
@@ -34,6 +38,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
+
       <div className={styles.field}>
         <input
           type="password"
@@ -42,6 +47,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
+      
       <div className={styles.field}>
         <button disabled={loggingIn}>
           {loggingIn ? 'Logging in...' : 'Log In'}{' '}

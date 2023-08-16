@@ -1,8 +1,29 @@
 import { PropTypes } from 'prop-types';
 import styles from '../styles/home.module.css';
 import Comment from '../components/Comment';
-export const Home = ({ posts }) => {
-    console.log(posts);
+import { getPosts } from '../api';
+import { useState, useEffect } from 'react';
+import Loader from '../components/loader';
+
+export const Home = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await getPosts();
+      console.log(response.data);
+      if (response.success) {
+        setPosts(response.data.posts);
+      }
+      setLoading(false);
+    console.log('response', response);
+    }
+    fetchPosts();
+  }, []);
+   if (loading) {
+     return <Loader />;
+   }
+  console.log(posts);
   return (
     <div className={styles.postsList}>
       {posts.map((post) => (
@@ -18,9 +39,9 @@ export const Home = ({ posts }) => {
 
                 <span className={styles.postTime}>
                   {Math.floor(
-                    (new Date() - new Date(post.createdAt)) / (3600000)
-                              )}
-                  &nbsp; Hours            
+                    (new Date() - new Date(post.createdAt)) / 3600000
+                  )}
+                  &nbsp; Hours
                 </span>
               </div>
             </div>
@@ -57,6 +78,6 @@ export const Home = ({ posts }) => {
   );
 };
 
-Home.propTypes = {
-  posts: PropTypes.array.isRequired,
-};
+// Home.propTypes = {
+//   posts: PropTypes.array.isRequired,
+// };
