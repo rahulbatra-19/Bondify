@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { getPosts } from '../api';
-import { Home, Login } from '../pages';
+import { Home, Login, Signup } from '../pages';
 import Loader from './loader';
 import Navbar from './Navbar';
 import { useAuth } from '../hooks';
@@ -21,7 +21,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
 
         <Route path="/login" element={<Login />}></Route>
-
+        <Route path='/register' element= {<Signup />}></Route>
         <Route path="*" element={<Page404 />}></Route>
       </Routes>
     </div>
