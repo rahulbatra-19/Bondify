@@ -26,7 +26,7 @@ const customFetch = async(url, { body, ...customConfig }) => {
     try {
         const response = await fetch(url, config);
         const data = await response.json();
-        console.log('Data  is : ', data);
+        // console.log('Data  is : ', data);
         if (data.success) {
             return {
                 data: data.data,
@@ -74,3 +74,22 @@ export const fetchUserProfile = (userId) => {
     method: 'GET',
   });
 };
+
+export const fetchUserFriends = () => {
+    return customFetch(API_URLS.friends(), {
+      method: 'GET',
+    });
+}
+
+export const addFriend = (userId) => {
+    return customFetch(API_URLS.createFriendship(userId), {
+        method: "POST"
+    });
+}
+
+
+export const removeFriend = (userId) => {
+    return customFetch(API_URLS.removeFriend(userId), {
+        method: 'POST'
+    });
+}
