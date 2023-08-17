@@ -4,6 +4,7 @@ import Comment from '../components/Comment';
 import { getPosts } from '../api';
 import { useState, useEffect } from 'react';
 import Loader from '../components/loader';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -16,13 +17,13 @@ export const Home = () => {
         setPosts(response.data.posts);
       }
       setLoading(false);
-    console.log('response', response);
-    }
+      console.log('response', response);
+    };
     fetchPosts();
   }, []);
-   if (loading) {
-     return <Loader />;
-   }
+  if (loading) {
+    return <Loader />;
+  }
   console.log(posts);
   return (
     <div className={styles.postsList}>
@@ -35,8 +36,12 @@ export const Home = () => {
                 alt="user-pic"
               />
               <div>
-                <span className={styles.postAuthor}>{post.user.name}</span>
-
+                <Link
+                  to={`/user/${post.user._id}`}
+                  className={styles.postAuthor}
+                >
+                  {post.user.name}
+                </Link>
                 <span className={styles.postTime}>
                   {Math.floor(
                     (new Date() - new Date(post.createdAt)) / 3600000

@@ -34,8 +34,7 @@ const customFetch = async(url, { body, ...customConfig }) => {
             };  
         }
         throw new Error(data.message);
-    } catch (error) {
-        console.log("error",error);       
+    } catch (error) {   
         return {
             message: error.message,
             success: false
@@ -69,3 +68,9 @@ export const editProfile = async (userId ,name, password, confirmPassword) => {
   });
 };
 
+
+export const fetchUserProfile = (userId) => {
+  return customFetch(API_URLS.userInfo(userId), {
+    method: 'GET',
+  });
+};
