@@ -41,7 +41,7 @@ const customFetch = async(url, { body, ...customConfig }) => {
         }
     }
 };
-export const getPosts = (page=1, limit=9) => {
+export const getPosts = (page=1, limit=6) => {
     return customFetch(API_URLS.posts(page, limit), {
       method: 'GET',
     });
