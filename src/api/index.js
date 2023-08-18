@@ -26,7 +26,7 @@ const customFetch = async(url, { body, ...customConfig }) => {
     try {
         const response = await fetch(url, config);
         const data = await response.json();
-        // console.log('Data  is : ', data);
+
         if (data.success) {
             return {
                 data: data.data,
@@ -102,3 +102,16 @@ export const addPost = (content) => {
       }
   });
 };
+
+
+export const createComment = async (content, postId) => {
+    return customFetch(API_URLS.comment(), {
+        method: "POST",
+        body: {
+            post_id: postId,
+            content
+        }
+    })
+}
+
+
