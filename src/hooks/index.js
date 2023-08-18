@@ -138,6 +138,7 @@ export const usePosts = () => {
 export const useProvidePosts = () => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
+  const auth = useAuth();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -166,11 +167,28 @@ export const useProvidePosts = () => {
 
     setPosts(newPosts);
   };
+  const addLikeToPost = (deleted, postId) => {
+    const newPosts = posts.map((post) => {
+      if (post._id === postId) {
+        console.log(deleted);
+        if (deleted) {
+          const likesupdated = post.likes.filter(item => item !== auth.user._id);
+          return { ...post, likes:likesupdated };
+        } else {
+          return { ...post, likes: [...post.likes, auth.user._id] };
+        }
+      }
+      return post;
+    });
+
+    setPosts(newPosts);
+  };
 
   return {
     data: posts,
     loading,
     addPostToState,
     addComment,
+    addLikeToPost,
   };
 };

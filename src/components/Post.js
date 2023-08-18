@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/home.module.css';
 import { usePosts } from '../hooks';
-import { createComment } from '../api';
+import { createComment, toggleLike } from '../api';
 import { toast } from 'react-toastify';
 import Comment from './Comment';
 
@@ -29,6 +29,22 @@ const Post = ({ post }) => {
     }
   };
 
+  const handlePostLikeClick = async () => {
+    const response = await toggleLike(post._id, 'Post');
+    if (response.success) {
+      if (response.data.deleted) {
+        posts.addLikeToPost(true, post._id);
+        toast('Like removed Succesfully');
+      } else {
+        posts.addLikeToPost(false, post._id);
+
+        toast('Like added Succesfully');
+      }
+    } else {
+      toast.error(response.message);
+    }
+  };
+
   return (
     <div className={styles.postWrapper} key={`post-${post._id}`}>
       <div className={styles.postHeader}>
@@ -42,13 +58,10 @@ const Post = ({ post }) => {
               {post.user.name}
             </Link>
             <span className={styles.postTime}>
-              {Math.floor(
-                (new Date() - new Date(post.createdAt)) / 3600000
-              ) == -1
+              {Math.floor((new Date() - new Date(post.createdAt)) / 3600000) ==
+              -1
                 ? 0
-                : Math.floor(
-                    (new Date() - new Date(post.createdAt)) / 3600000
-                  )}
+                : Math.floor((new Date() - new Date(post.createdAt)) / 3600000)}
               &nbsp; Hours
             </span>
           </div>
@@ -56,10 +69,15 @@ const Post = ({ post }) => {
         <div className={styles.postContent}>{post.content}</div>
         <div className={styles.postActions}>
           <div className={styles.postLike}>
-            <img
-              src="https://img.icons8.com/?size=2x&id=16076&format=png"
-              alt=""
-            />
+            <button
+              onClick={handlePostLikeClick}
+              style={{ border: 'none', background: 'transparent' }}
+            >
+              <img
+                src="https://img.icons8.com/?size=2x&id=16076&format=png"
+                alt=""
+              />
+            </button>
             <span>{post.likes.length}</span>
           </div>
           <div className={styles.postCommentsIcon}>

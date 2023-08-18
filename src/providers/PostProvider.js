@@ -5,6 +5,7 @@ const initialState = {
   loading: true,
   addPostToState: () => {},
   addComment: () => {},
+  addLikeToPost: () => {},
 };
 
 export const PostsContext = createContext(initialState);
