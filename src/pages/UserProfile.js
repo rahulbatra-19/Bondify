@@ -19,7 +19,7 @@ const UserProfile = () => {
   const { userId } = useParams();
   // console.log(userId);
   const auth = useAuth();
-  // console.log(auth.user);
+  console.log(user);
 
   useEffect(() => {
     const getUser = async () => {
