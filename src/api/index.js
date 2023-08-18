@@ -120,3 +120,9 @@ export const toggleLike = async (itemId, itemType) => {
   });
 };
 
+export const searchUsers = async (searchText) => {
+  return customFetch(API_URLS.searchUsers(searchText), {
+    method: 'GET',
+  });
+};
+
